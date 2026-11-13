@@ -263,6 +263,28 @@ textarea.inp{min-height:84px;resize:vertical;line-height:1.6}
 .setsec h4{margin:0;font-size:15px}
 .mrowx{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.4fr) auto;gap:8px;align-items:center;font-size:13.5px}
 @media(max-width:560px){.mrowx{grid-template-columns:auto minmax(0,1fr) auto}.mrowx .em{grid-column:2/3;font-size:12px;color:var(--ink3)}}
+/* v5 */
+.wk{display:grid;gap:8px}
+@media(min-width:960px){.wk{grid-template-columns:repeat(5,minmax(0,1fr)) repeat(2,minmax(0,.72fr))}}
+.wkd{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
+.wkd.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.wkh{display:flex;align-items:center;gap:6px;padding:7px 10px;background:var(--sub);font-size:13px}
+.wkh span{color:var(--ink2);font-variant-numeric:tabular-nums}
+.wkd.we .wkh b{color:var(--rose)}
+.wkb{padding:8px 10px;display:flex;flex-direction:column;gap:7px;min-height:42px}
+@media(min-width:960px){.wkb{min-height:130px}}
+.wki{display:flex;align-items:flex-start;gap:7px;min-width:0}
+.wkt{font-size:13.5px;text-align:left;overflow-wrap:anywhere;line-height:1.4;min-width:0}
+.wkt small{display:block;font-size:11.5px;color:var(--ink3)}
+.wki.done .wkt{color:var(--ink3);text-decoration:line-through}
+.wki.late .wkt{color:var(--fail)}
+.tck.s{width:20px;height:20px;border-radius:6px;flex:none;margin-top:1px}
+.tck.s svg{width:12px;height:12px}
+.wki.done .tck{background:var(--accent);border-color:var(--accent)}
+.wkb .ev{display:block;text-align:left;font-size:12px;padding:2px 6px}
+.wk0{color:var(--ink3);font-size:13px}
+.ev.dn{background:var(--sub);color:var(--ink3);text-decoration:line-through}
+.page-h .seg button{padding:6px 12px}
 /* v4 */
 .qa{display:flex;gap:8px;flex-wrap:wrap}
 .qa .inp{flex:1;min-width:200px;height:44px;font-size:15px;background:var(--paper);border-color:var(--accent)}
@@ -396,15 +418,14 @@ const MCOL=['#0B8A55','#B45309','#2563EB','#BE185D','#7C3AED','#0E7490','#A16207
 const PCOL=['#0B8A55','#B45309','#2563EB','#BE185D','#7C3AED','#0E7490'];
 const PNAME=['그린','골드','블루','로즈','퍼플','틸'];
 const TPL_DEF=[
-  {id:'meetingPrep',name:'현장 미팅 보고 항목',items:['행사장 동선·공간 구성','무대·음향·조명·전기','클라이언트 요청사항','협력업체·인력 확인','예산·견적 변동','이슈·리스크']},
+  {id:'meetingPrep',name:'현장답사·미팅 보고 항목',items:['행사장 동선·공간 구성','무대·음향·조명·전기','클라이언트 요청사항','협력업체·인력 확인','예산·견적 변동','이슈·리스크']},
   {id:'meetingReport',name:'회의 보고서 항목',items:['회의 목적','논의 내용','결정 사항','추가 확인 필요']},
   {id:'taskCheck',name:'업무 기본 체크리스트',items:['요청사항 확인','업체 견적·섭외','초안 작성','내부 검토','클라이언트 컨펌']},
-  {id:'leaveTypes',name:'근무 현황 종류',items:['휴가','오전 반차','오후 반차','외근','현장 답사','행사 현장','출장','재택']},
-  {id:'eventPlan',name:'행사 표준 일정',items:['D-45 행사 개요·요구사항 확인 @PM','D-40 견적서·예산안 작성 @PM','D-35 현장 답사 @담당','D-30 연출 기획안 작성 @PM','D-28 협력업체 섭외(무대·음향·조명) @담당','D-21 큐시트 초안 @담당','★D-14 클라이언트 중간 보고 @담당','D-10 인력·동선 계획 확정 @담당','D-7 업체 최종 확인 @담당','D-3 리허설 일정·자재 점검 @담당','D-1 현장 세팅·리허설 @PM','★D+3 결과 보고서·정산 @담당']}];
+  {id:'leaveTypes',name:'근무 현황 종류',items:['휴가','오전 반차','오후 반차','외근','현장 답사','행사 현장','출장','재택']}];
 const LOGK=['메모'];
 const COLS=['members','projects','tasks','meetings','leaves','logs','templates','proposals','guides','photos','changes'];
 const COLNAME={members:'직원',projects:'프로젝트',tasks:'업무',meetings:'회의',leaves:'근무 현황',logs:'업무일지',templates:'양식',proposals:'제안',guides:'가이드',photos:'사진'};
-const FL={title:'제목',name:'이름',projectId:'프로젝트',assignee:'담당자',start:'시작일',due:'마감일',end:'마감일',status:'상태',progress:'진행률',checklist:'체크리스트',note:'진행 메모',memo:'메모',date:'날짜',time:'시간',attendees:'참석자',host:'진행자',report:'회의 기록',actions:'결정 업무',member:'직원',type:'종류',owner:'PM',color:'색',items:'항목',notes:'직접 쓴 내용',role:'권한',reason:'이유',nextAck:'다음 주 확인',savedAt:'저장',meetingId:'회의',doneAt:'완료일',decidedBy:'처리한 사람',decidedAt:'처리 시각',site:'현장 미팅 보고',kind:'종류',reviewer:'확인자',staff:'담당자',contacts:'연락처',body:'내용',cat:'분류',approval:'수석 확인',missed:'못한 사유',submitAt:'확인 요청일',auto:'자동 내용'};
+const FL={title:'제목',name:'이름',projectId:'프로젝트',assignee:'담당자',start:'시작일',due:'마감일',end:'마감일',status:'상태',progress:'진행률',checklist:'체크리스트',note:'진행 메모',memo:'메모',date:'날짜',time:'시간',attendees:'참석자',host:'진행자',report:'회의 기록',actions:'결정 업무',member:'직원',type:'종류',owner:'PM',color:'색',items:'항목',notes:'직접 쓴 내용',role:'권한',reason:'이유',nextAck:'다음 주 확인',savedAt:'저장',meetingId:'회의',doneAt:'완료일',decidedBy:'처리한 사람',decidedAt:'처리 시각',site:'현장 보고',kind:'종류',sub:'구분',reviewer:'확인자',staff:'담당자',contacts:'연락처',body:'내용',cat:'분류',approval:'수석 확인',missed:'못한 사유',submitAt:'확인 요청일',auto:'자동 내용'};
 const I={
   ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
   l:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
@@ -422,10 +443,10 @@ const I={
 
 /* ---------- demo data ---------- */
 const DEF_GUIDES=()=>[
-  {id:'g-site',cat:'현장 답사',order:1,title:'현장 답사 가이드',body:'## 출발 전\n- 행사 개요서·도면·이전 견적을 휴대폰에 저장\n- 시설 담당자 연락처와 방문 시간 확인 (프로젝트 > 연락처)\n- 줄자, 보조배터리 준비\n## 현장에서 확인할 것\n1. 출입 동선: 정문 → 등록 → 메인홀, 하차장·주차 위치\n2. 무대: 위치, 크기, 천장 높이, 반입구 크기\n3. 전기: 분전반 위치와 용량, 발전차 필요 여부\n4. 음향·조명: 기존 장비, 소음 제한 시간\n5. 안전: 비상구, 소화기, 대피 동선\n## 사진으로 남길 것\n- 무대 정면·측면, 반입구, 분전반, 객석 전경, 비상구\n## 돌아와서\n- 당일 안에 회의 탭 \'현장 미팅 보고\'에 항목별 사진과 내용 입력'},
+  {id:'g-site',cat:'현장 답사',order:1,title:'현장 답사 가이드',body:'## 출발 전\n- 행사 개요서·도면·이전 견적을 휴대폰에 저장\n- 시설 담당자 연락처와 방문 시간 확인 (프로젝트 > 연락처)\n- 줄자, 보조배터리 준비\n## 현장에서 확인할 것\n1. 출입 동선: 정문 → 등록 → 메인홀, 하차장·주차 위치\n2. 무대: 위치, 크기, 천장 높이, 반입구 크기\n3. 전기: 분전반 위치와 용량, 발전차 필요 여부\n4. 음향·조명: 기존 장비, 소음 제한 시간\n5. 안전: 비상구, 소화기, 대피 동선\n## 사진으로 남길 것\n- 무대 정면·측면, 반입구, 분전반, 객석 전경, 비상구\n## 돌아와서\n- 당일 안에 미팅·회의 탭 현장답사 보고에 항목별 사진과 내용 입력'},
   {id:'g-q',cat:'미팅',order:1,title:'클라이언트 미팅 질문 가이드',body:'## 행사 기본\n- 행사 목적과 꼭 전해야 할 메시지는?\n- 예상 인원, VIP·의전 대상은?\n- 날짜·시간 확정 여부와 변경 가능성은?\n## 예산·결정\n- 전체 예산 범위와 포함 항목은?\n- 최종 결정권자와 컨펌 일정은?\n## 연출·운영\n- 꼭 들어가야 할 순서(축사, 시상 등)는?\n- 원하는 분위기나 참고 사례는?\n- 기념품·케이터링·촬영 필요 여부는?\n## 마무리\n- 다음 보고 일정과 연락 창구 확인'},
   {id:'g-q2',cat:'미팅',order:2,title:'시설 담당자 확인 질문',body:'- 반입·철수 가능 시간은?\n- 사용 가능한 전기 용량과 분전반 위치는?\n- 소음·운영 시간 제한은?\n- 소방·안전 신고가 필요한가?\n- 하차 가능한 차량 크기와 주차 대수는?'},
-  {id:'g-report',cat:'회사 지침',order:1,title:'보고 원칙',body:'- 현장 미팅 후 당일 안에 \'현장 미팅 보고\' 작성\n- 클라이언트 요청 변경은 메신저가 아니라 회의 기록에 남김\n- 마감을 못 지키면 업무일지 \'못한 업무\'에 사유와 새 마감일 입력\n- 담당을 넘길 때는 반드시 인계 내용 작성'},
+  {id:'g-report',cat:'회사 지침',order:1,title:'보고 원칙',body:'- 현장답사·미팅 후 당일 안에 보고 작성\n- 클라이언트 요청 변경은 메신저가 아니라 회의 기록에 남김\n- 마감을 못 지키면 업무일지 \'못한 업무\'에 사유와 새 마감일 입력\n- 담당을 넘길 때는 반드시 인계 내용 작성'},
   {id:'g-leave',cat:'회사 지침',order:2,title:'휴가·외근 등록',body:'- 휴가는 3일 전까지 팀 > 일정에 등록\n- 부재 중 마감인 업무는 미리 담당을 넘기거나 인계 내용 작성\n- 현장 답사·외근은 당일 아침까지 등록'},
   {id:'g-cost',cat:'회사 지침',order:3,title:'비용 처리',body:'(회사 기준을 입력해 주세요)\n- 법인카드 사용 기준\n- 영수증 제출 방법과 기한'}];
 
@@ -464,14 +485,15 @@ function seed(){
   const SITE=(vals,oks)=>TPL_DEF[0].items.map((k,i)=>({id:uid(),k,v:vals[i]||'',ok:!!oks[i]}));
   const REP=vals=>TPL_DEF[1].items.map((k,i)=>({k,v:vals[i]||''}));
   const meetings=[
-    {id:m1,kind:'internal',title:'주간 업무 회의',date:D(-2),time:'10:00',projectId:'',host:e('chief'),attendees:all,site:[],
-     report:REP(['이번 주 행사별 진행 상황 공유','A사 기념식: 케이터링 섭외 지연\nC사 런칭쇼: 사례 조사 인력 보강 필요','사례 조사는 박매니저가 이어받음\n회의록 양식은 진매니저가 정리','리허설 날짜 클라이언트 확인']),
+    {id:m1,kind:'internal',sub:'',title:'A사 기념식 진행 회의',date:D(-2),time:'10:00',projectId:P[0],host:e('chief'),attendees:all,site:[],
+     report:REP(['A사 기념식 준비 상황 점검','케이터링 섭외 지연\n리허설 날짜 미확정','케이터링은 임매니저가 이번 주 안에 확정\n회의록 양식은 진매니저가 정리','리허설 날짜 클라이언트 확인']),
      actions:[{id:uid(),title:'회의록 양식 정리',assignee:e('jin'),due:D(1),taskId:tasks[12].id},{id:uid(),title:'클라이언트 리허설 일정 조율',assignee:e('chief'),due:D(1),taskId:tasks[15].id}]},
-    {id:m2,kind:'site',title:'B시 축제장 현장 미팅',date:D(-1),time:'14:00',projectId:P[1],host:e('lead'),attendees:[e('lead'),e('park'),e('jin')],
+    {id:m2,kind:'site',sub:'visit',title:'B시 축제장 현장답사',date:D(-1),time:'14:00',projectId:P[1],host:e('lead'),attendees:[e('lead'),e('park'),e('jin')],
      site:SITE(['메인무대는 광장 북측, 푸드트럭 동선과 겹치지 않게 배치','분전반 2곳, 무대 쪽 용량 부족 → 발전차 필요','시청 담당자: 개막식 15분 이내로 요청','지역 음향업체 2곳 견적 요청 예정','발전차 추가로 약 200만 원 증가 예상','우천 시 대체 장소 미정'],[1,1,1,0,1,0]),
      report:REP(['','','','']),actions:[]},
-    {id:uid(),kind:'site',title:'A사 기념식장 2차 현장 미팅',date:D(2),time:'14:00',projectId:P[0],host:e('chief'),attendees:[e('chief'),e('park'),e('lim')],site:SITE([],[]),report:REP([]),actions:[]},
-    {id:uid(),kind:'internal',title:'C사 런칭쇼 제안 리허설',date:D(6),time:'15:00',projectId:P[2],host:e('ceo'),attendees:[e('ceo'),e('chief'),e('park'),e('kim')],site:[],report:REP([]),actions:[]}];
+    {id:uid(),kind:'site',sub:'meet',title:'A사 담당자 미팅',date:D(2),time:'14:00',projectId:P[0],host:e('chief'),attendees:[e('chief'),e('park'),e('lim')],site:SITE([],[]),report:REP([]),actions:[]},
+    {id:uid(),kind:'internal',sub:'',title:'C사 런칭쇼 제안 리허설',date:D(6),time:'15:00',projectId:P[2],host:e('ceo'),attendees:[e('ceo'),e('chief'),e('park'),e('kim')],site:[],report:REP([]),actions:[]},
+    {id:uid(),kind:'internal',sub:'',title:'B시 축제 현장답사 결과 회의',date:D(1),time:'11:00',projectId:P[1],host:e('lead'),attendees:[e('lead'),e('park'),e('jin'),e('kim')],site:[],report:REP([]),actions:[]}];
   const leaves=[{id:uid(),member:e('lim'),type:'출장',start:D(1),end:D(3),memo:'부산 현장'},{id:uid(),member:e('kim'),type:'휴가',start:T,end:T,memo:''},{id:uid(),member:e('jin'),type:'외근',start:T,end:T,memo:'B시청 협의'},{id:uid(),member:e('park'),type:'현장 답사',start:D(2),end:D(2),memo:'A사 기념식장'},{id:uid(),member:e('lead'),type:'휴가',start:D(5),end:D(6),memo:''}];
   const proposals=[];
   const t0=tasks[0],prevT0=JSON.parse(JSON.stringify(t0));prevT0.checklist[2].done=false;prevT0.note='';prevT0.history=prevT0.history.slice(0,2);
@@ -557,12 +579,13 @@ function recordChange(k,id,kind,prevStr,po,cur){
 /* ---------- cloud ---------- */
 let renderQ=false;
 function queueRender(){if(renderQ)return;renderQ=true;requestAnimationFrame(()=>{renderQ=false;const a=document.activeElement;if(a&&a.classList&&a.classList.contains('live'))return;render()})}
-function stopListeners(){cloud.unsubs.forEach(u=>u());cloud.unsubs=[];cloud.ready=false;if(cloud.photoUnsub)cloud.photoUnsub();cloud.photoUnsub=null;cloud.photoMid=''}
+function stopListeners(){cloud.unsubs.forEach(u=>u());cloud.unsubs=[];cloud.ready=false;Object.values(cloud.photoSubs||{}).forEach(u=>u());cloud.photoSubs={}}
 /* 사진은 앱을 열 때 전부 받지 않고, 회의를 열 때 그 회의 사진만 받아요 */
-function watchPhotos(mid){
-  if(!cloud.ready||!mid||cloud.photoMid===mid)return;
-  if(cloud.photoUnsub)cloud.photoUnsub();cloud.photoMid=mid;
-  cloud.photoUnsub=col('photos').where('meetingId','==',mid).onSnapshot(snap=>{if(pushT)flush();const arr=snap.docs.map(d=>Object.assign({},d.data(),{id:d.id}));S.photos=S.photos.filter(x=>x.meetingId!==mid).concat(arr);rebase('photos');queueRender()},()=>{});
+function watchPhotos(ids){
+  if(!cloud.ready)return;ids=[].concat(ids).filter(Boolean);cloud.photoSubs=cloud.photoSubs||{};
+  Object.keys(cloud.photoSubs).forEach(k=>{if(!ids.includes(k)){cloud.photoSubs[k]();delete cloud.photoSubs[k]}});
+  ids.forEach(mid=>{if(cloud.photoSubs[mid])return;
+    cloud.photoSubs[mid]=col('photos').where('meetingId','==',mid).onSnapshot(snap=>{if(pushT)flush();const arr=snap.docs.map(d=>Object.assign({},d.data(),{id:d.id}));S.photos=S.photos.filter(x=>x.meetingId!==mid).concat(arr);rebase('photos');queueRender()},()=>{})});
 }
 function startListeners(){
   stopListeners();cloud.state='loading';render();
@@ -638,7 +661,10 @@ const avTxt=n=>n.slice(0,2);
 const av=(id,sm)=>`<span class="av ${sm?'sm':''}" style="background:${mcol(id)}" title="${esc(mname(id))}">${esc(avTxt(mname(id)))}</span>`;
 const proj=id=>S.projects.find(p=>p.id===id);
 const pc=p=>PCOL[(+p.color||0)%PCOL.length];
-const tpl=id=>{const d=TPL_DEF.find(t=>t.id===id)||{id,name:id,items:[]},s=S.templates.find(t=>t.id===id);return s?Object.assign({},d,s):Object.assign({version:1},d)};
+const isSite=m=>m.kind!=='internal';
+const kindLabel=m=>m.kind==='internal'?'회의':m.sub==='meet'?'미팅':'현장답사';
+const siteOf=m=>m.projectId?S.meetings.filter(x=>x.id!==m.id&&isSite(x)&&x.projectId===m.projectId).sort(mAsc).slice(-5):[];
+const tpl=id=>{const d=TPL_DEF.find(t=>t.id===id)||{id,name:id,items:[]},s=S.templates.find(t=>t.id===id);return s?Object.assign({},d,s,{name:d.name}):Object.assign({version:1},d)};
 const tplName=id=>(TPL_DEF.find(t=>t.id===id)||{name:id}).name;
 const pct=t=>t.status==='done'?100:0;
 const rate=(a,b)=>b?Math.round(a/b*100):0;
@@ -674,7 +700,7 @@ function taskItem(t,o){
 }
 function mStage(m){const a=m.actions||[];if(a.length&&a.every(x=>x.taskId))return['done','배정 완료'];if((m.report||[]).some(r=>r.v&&r.v.trim())||(m.site||[]).some(x=>x.ok||(x.v&&x.v.trim())))return['doing','기록 중'];return['todo','준비 중']}
 function meetRow(m){const[s,l]=mStage(m),a=m.actions||[];
-  return `<button class="mrow" data-act="openMeet" data-id="${m.id}"><span class="mdate"><b>${md(m.date)}</b><span>${dowOf(m.date)} ${m.time||''}</span></span><span class="tmain"><span class="tname">${esc(m.title)}</span><span class="tmeta">${[`<span class="mi">${m.kind==='internal'?'내부 회의':'현장 미팅'}</span>`,projTag(m.projectId),`<span class="mi">참석 ${(m.attendees||[]).length}명</span>`,a.length?`<span class="mi">결정 업무 ${a.filter(x=>x.taskId).length}/${a.length}</span>`:''].join('')}</span></span><span class="chip ${s}">${l}</span></button>`}
+  return `<button class="mrow" data-act="openMeet" data-id="${m.id}"><span class="mdate"><b>${md(m.date)}</b><span>${dowOf(m.date)} ${m.time||''}</span></span><span class="tmain"><span class="tname">${esc(m.title)}</span><span class="tmeta">${[`<span class="mi">${kindLabel(m)}</span>`,projTag(m.projectId),`<span class="mi">참석 ${(m.attendees||[]).length}명</span>`,a.length?`<span class="mi">결정 업무 ${a.filter(x=>x.taskId).length}/${a.length}</span>`:''].join('')}</span></span><span class="chip ${s}">${l}</span></button>`}
 const kCard=t=>{const dl=dueLabel(t),cl=t.checklist||[];return `<button class="kc ${isLate(t)?'late':''}" data-act="task" data-id="${t.id}"><span class="tname">${t.status==='done'?'✓ ':''}${esc(t.title)}</span><span class="tmeta">${av(t.assignee,1)}<span>${esc(mname(t.assignee))}</span><span class="due ${dl.c}">${dl.t}</span>${cl.length?`<span>체크 ${cl.filter(c=>c.done).length}/${cl.length}</span>`:''}</span></button>`};
 const memberOpts=(sel,blankLbl)=>(blankLbl?`<option value="">${blankLbl}</option>`:'')+S.members.map(m=>`<option value="${esc(m.id)}" ${m.id===sel?'selected':''}>${esc(m.name)}${m.id===me()?' (나)':''}</option>`).join('');
 
@@ -683,7 +709,7 @@ function nextWeekItems(who){
   const T=today(),nMon=addDays(mondayOf(T),7),nSun=addDays(nMon,6),out=[];
   S.tasks.filter(t=>t.assignee===who&&t.status!=='done'&&t.due&&t.due<nMon&&t.due<=addDays(mondayOf(T),6)&&t.due<T).sort(byDue).forEach(t=>out.push({k:'o:'+t.id,tag:'밀림',c:'red',t:tLabel(t),d:md(t.due),act:`data-act="task" data-id="${t.id}"`}));
   S.tasks.filter(t=>t.assignee===who&&t.status!=='done'&&t.due>=nMon&&t.due<=nSun).sort(byDue).forEach(t=>out.push({k:'t:'+t.id,tag:'마감',c:'red',t:tLabel(t),d:`${md(t.due)} ${dowOf(t.due)}`,act:`data-act="task" data-id="${t.id}"`}));
-  S.meetings.filter(m=>m.date>=nMon&&m.date<=nSun&&(m.attendees||[]).includes(who)).sort(mAsc).forEach(m=>out.push({k:'m:'+m.id,tag:'회의',c:'doing',t:m.title,d:`${md(m.date)} ${dowOf(m.date)} ${m.time||''}`,act:`data-act="openMeet" data-id="${m.id}"`}));
+  S.meetings.filter(m=>m.date>=nMon&&m.date<=nSun&&(m.attendees||[]).includes(who)).sort(mAsc).forEach(m=>out.push({k:'m:'+m.id,tag:kindLabel(m),c:'doing',t:m.title,d:`${md(m.date)} ${dowOf(m.date)} ${m.time||''}`,act:`data-act="openMeet" data-id="${m.id}"`}));
   S.projects.filter(p=>p.status!=='done'&&p.end>=nMon&&p.end<=nSun).forEach(p=>out.push({k:'p:'+p.id,tag:'프로젝트',c:'done',t:`${p.name} 마감`,d:`${md(p.end)} ${dowOf(p.end)}`,act:`data-act="openProj" data-id="${p.id}"`}));
   S.leaves.filter(l=>l.start<=nSun&&l.end>=nMon).sort((a,b)=>a.start.localeCompare(b.start)).forEach(l=>out.push({k:'l:'+l.id,tag:'부재',c:'hold',t:`${mname(l.member)} ${l.type}`,d:`${md(l.start)}${l.end>l.start?'–'+md(l.end):''}`,act:`data-act="leave" data-id="${l.id}"`}));
   return {items:out,nMon,nSun};
@@ -701,7 +727,7 @@ function vRemind(who){
 }
 
 /* ---------- views ---------- */
-const ui={tab:'me',teamView:'today',ta:{who:'',proj:'',st:'open',late:false,ho:false},gcat:'',pres:null,who:null,proj:null,pWho:'',meet:null,mstep:null,month:today().slice(0,7),sel:today(),cs:{lv:1,mt:1,du:1},logMode:'day',logDate:today(),logWho:null,open:{},draft:null,armed:null,showNext:false};
+const ui={tab:'me',myView:'today',myMonth:today().slice(0,7),mySel:today(),mk:'site',teamView:'today',ta:{who:'',proj:'',st:'open',late:false,ho:false},gcat:'',pres:null,who:null,proj:null,pWho:'',meet:null,mstep:null,month:today().slice(0,7),sel:today(),cs:{lv:1,mt:1,du:1},logMode:'day',logDate:today(),logWho:null,open:{},draft:null,armed:null,showNext:false};
 try{const t=sessionStorage.getItem('go.tab');if(t)ui.tab=t==='cal'?'team':t}catch(e){}
 
 /* ---------- quick add ---------- */
@@ -709,41 +735,112 @@ const WD={일:0,월:1,화:2,수:3,목:4,금:5,토:6};
 function parseDue(tok,nextWeek){
   const T=today(),d0=parse(T);let m;
   if(tok==='오늘')return T;if(tok==='내일')return addDays(T,1);if(tok==='모레')return addDays(T,2);
+  if((m=tok.match(/^(\d{2}|\d{4})[-.\/]?(\d{2})[-.\/]?(\d{2})$/))){const y=m[1].length===2?2000+ +m[1]:+m[1],mo=+m[2],dd=+m[3];if(mo>=1&&mo<=12&&dd>=1&&dd<=31)return `${y}-${pad(mo)}-${pad(dd)}`}
   const w=tok.replace(/요일$/,'');
   if(w.length===1&&w in WD&&tok!=='일')return nextWeek?addDays(mondayOf(T),7+(WD[w]+6)%7):addDays(T,(WD[w]-d0.getDay()+7)%7);
-  if((m=tok.match(/^(\d{1,2})[\/.](\d{1,2})$/))){const mo=+m[1],dd=+m[2];if(mo<1||mo>12||dd<1||dd>31)return null;let y=d0.getFullYear(),r=`${y}-${pad(mo)}-${pad(dd)}`;if(r<addDays(T,-60))r=`${y+1}-${pad(mo)}-${pad(dd)}`;return r}
+  if((m=tok.match(/^(\d{1,2})[\/.](\d{1,2})$/)||tok.match(/^(\d{1,2})월(\d{1,2})일$/))){const mo=+m[1],dd=+m[2];if(mo<1||mo>12||dd<1||dd>31)return null;let y=d0.getFullYear(),r=`${y}-${pad(mo)}-${pad(dd)}`;if(r<addDays(T,-60))r=`${y+1}-${pad(mo)}-${pad(dd)}`;return r}
   if((m=tok.match(/^(\d{1,2})일$/))){const dd=+m[1];if(dd<1||dd>31)return null;const x=new Date(d0.getFullYear(),d0.getMonth()+(dd<d0.getDate()?1:0),dd);return ymd(x)}
   return null;
 }
-function matchMember(tok){tok=tok.replace(/^@/,'');if(tok.length<2)return '';const c=S.members.filter(m=>m.name.startsWith(tok));return c.length===1?c[0].id:''}
+function parseDueSeg(seg){const t=seg.replace(/다음\s*주/,'다음주 ').trim().split(/\s+/);if(t[0]==='다음주')return t[1]?parseDue(t[1],true):addDays(mondayOf(today()),7);return parseDue(t.join(''),false)}
+function matchMember(tok,loose){tok=tok.replace(/^@/,'');if(tok.length<2)return '';
+  for(const f of [m=>m.name===tok,m=>m.name.startsWith(tok)].concat(loose?[m=>m.name.includes(tok)]:[])){const c=S.members.filter(f);if(c.length===1)return c[0].id;if(c.length>1)return ''}
+  return ''}
+/* 프로젝트 이름이 조금 달라도 찾기: 포함 > 글자 순서 일치 > 두 글자 묶음 유사도 */
+const nrm=x=>String(x||'').toLowerCase().replace(/[\s·,.\-_()\[\]'"]/g,'');
+function nameSim(a,b){
+  if(!a||!b)return 0;if(a===b)return 1;if(a.length>=2&&b.includes(a))return .9;
+  if(a.length>=3){let i=0;for(const ch of b){if(ch===a[i])i++;if(i===a.length)break}if(i===a.length)return .7}
+  const g=x=>{const o=[];for(let i=0;i<x.length-1;i++)o.push(x.slice(i,i+2));return o},A=g(a),B=g(b);if(!A.length||!B.length)return 0;
+  let n=0;A.forEach(x=>{const i=B.indexOf(x);if(i>=0){n++;B.splice(i,1)}});return 2*n/(A.length+B.length+n);
+}
+function matchProject(toks,min){
+  const ps=S.projects.filter(p=>p.status!=='done');let best=null;
+  for(let k=Math.min(toks.length-1,6);k>=1;k--){const c=nrm(toks.slice(0,k).join(''));if(c.length<2)continue;let top=null;
+    ps.forEach(p=>{const sc=nameSim(c,nrm(p.name));if(sc>=min&&(!best||sc>best.sc+.001))best={p,k,sc};if(sc>=.7&&(!top||sc>top.sc))top={p,k,sc}});
+    if(top)return top} /* 이름이 뚜렷하게 맞으면 가장 길게 맞는 쪽을 프로젝트 이름으로 봐요 */
+  return best;
+}
 function parseQuick(line,pid,defWho){
-  const toks=line.replace(/다음\s*주/g,' 다음주 ').trim().split(/\s+/);let due='',who='',pj=pid||'';
-  while(toks.length>1){const t=toks.at(-1);let v;
-    if(!due&&(v=parseDue(t,false))){toks.pop();if(toks.length>1&&toks.at(-1)==='다음주'){toks.pop();v=parseDue(t,true)||v}due=v;continue}
-    if(!due&&t==='다음주'){toks.pop();due=addDays(mondayOf(today()),7);continue}
-    if(!who&&(v=matchMember(t))){who=v;toks.pop();continue}
-    if(t.length>1&&t.startsWith('#')){const p=S.projects.find(x=>x.status!=='done'&&x.name.includes(t.slice(1)));if(p){pj=p.id;toks.pop();continue}}
-    break}
-  return {title:toks.join(' '),due:due||today(),assignee:who||defWho,projectId:pj};
+  const warn=[];let due='',who='',pj=pid||'',title='';
+  const parts=line.split(/[,，]/).map(x=>x.trim()).filter(Boolean);
+  if(parts.length>1){
+    const extra=[];
+    parts.slice(1).forEach(seg=>{let v;
+      if(!due&&(v=parseDueSeg(seg))){due=v;return}
+      if(!who&&(v=matchMember(seg.replace(/\s+/g,''),true))){who=v;return}
+      extra.push(seg)});
+    let toks=parts[0].split(/\s+/);
+    if(!pj){const b=matchProject(toks,.6);if(b){pj=b.p.id;toks=toks.slice(b.k)}else warn.push('프로젝트를 못 찾아 프로젝트 없이 등록')}
+    title=toks.join(' ');
+    extra.forEach(seg=>{if(!who&&/^[가-힣]{2,5}$/.test(seg)){who=defWho;warn.push(`담당자 '${seg}'을(를) 못 찾아 ${mname(defWho)}(으)로 등록`)}else title+=', '+seg});
+  }else{
+    let toks=line.replace(/다음\s*주/g,' 다음주 ').trim().split(/\s+/);
+    while(toks.length>1){const t=toks.at(-1);let v;
+      if(!due&&(v=parseDue(t,false))){toks.pop();if(toks.length>1&&toks.at(-1)==='다음주'){toks.pop();v=parseDue(t,true)||v}due=v;continue}
+      if(!due&&t==='다음주'){toks.pop();due=addDays(mondayOf(today()),7);continue}
+      if(!who&&(v=matchMember(t,false))){who=v;toks.pop();continue}
+      if(t.length>1&&t.startsWith('#')){const b=matchProject([t.slice(1),''],.6);if(b){pj=b.p.id;toks.pop();continue}}
+      break}
+    if(!pj){const b=matchProject(toks,.7);if(b){pj=b.p.id;toks=toks.slice(b.k)}}
+    title=toks.join(' ');
+  }
+  return {title,due:due||today(),assignee:who||defWho,projectId:pj,warn};
 }
 function mkTask(o){return {id:uid(),title:o.title,projectId:o.projectId||'',assignee:o.assignee,start:'',due:o.due||'',status:'todo',reviewer:o.reviewer||'',checklist:[],note:'',meetingId:'',createdBy:me(),history:[{at:nowISO(),d:today(),by:me(),type:'create',text:(o.src||'업무 등록')+' · '+mname(o.assignee)+' 담당'}]}}
 const qaWho=()=>ui.tab==='me'&&ui.who&&mem(ui.who)?ui.who:me();
-function qaBar(pid){return `<div class="qa"><input id="qa" class="inp live" data-pid="${pid||''}" placeholder="할 일을 한 줄로 · 예: 큐시트 초안 금 박매" autocomplete="off" enterkeyhint="done" aria-label="업무 빠른 입력"><button class="btn pri" data-act="qaAdd">추가</button><button class="btn" data-act="qaBulk">여러 줄</button></div>`}
+function qaBar(pid){return `<div class="qa"><input id="qa" class="inp live" data-pid="${pid||''}" placeholder="${pid?'할 일, 날짜, 담당자 · 예: 무대세팅, 270101, 최강현':'프로젝트 할 일, 날짜, 담당자 · 예: 신년인사회 무대세팅, 270101, 최강현'}" autocomplete="off" enterkeyhint="done" aria-label="업무 한 줄 입력"><button class="btn pri" data-act="qaAdd">추가</button><button class="btn" data-act="qaBulk">여러 줄</button></div>`}
 function bulkSheet(pid,text){
   ui.draft={pid:pid||'',who:qaWho()};
-  openSheet(`${head('여러 줄로 등록')}<p class="note" style="margin:0">한 줄에 업무 하나씩 적거나 붙여 넣으세요. 줄 끝에 <b>마감</b>(오늘 · 내일 · 금 · 다음주 수 · 11/20 · 20일)과 <b>담당자 이름 앞 두 글자</b>를 쓰면 알아서 읽어요. 안 쓰면 담당은 ${esc(mname(ui.draft.who))}, 마감은 오늘이에요.</p>
-  <textarea id="qa-bulk" class="copybox" style="min-height:220px" placeholder="큐시트 초안 금 박매&#10;케이터링 견적 요청 내일 임매&#10;현장 사진 정리">${esc(text||'')}</textarea><span class="err" id="f-err" hidden>업무를 한 줄 이상 적어 주세요.</span>
+  openSheet(`${head('여러 줄로 등록')}<p class="note" style="margin:0">한 줄에 업무 하나씩, <b>${pid?'':'프로젝트 '}할 일, 날짜, 담당자</b> 순서로 쉼표로 나눠 적어요.<br>날짜는 270101 · 1/1 · 금 · 다음주 수 · 내일 모두 돼요. 프로젝트 이름은 조금 달라도 찾아가요.<br>날짜를 안 쓰면 오늘, 담당자를 안 쓰면 ${esc(mname(ui.draft.who))}(으)로 들어가요.</p>
+  <textarea id="qa-bulk" class="copybox" style="min-height:220px" placeholder="${pid?'무대세팅, 270101, 최강현&#10;음향 리허설, 금':'신년인사회 무대세팅, 270101, 최강현&#10;신년인사회 초청장 발송, 12/20&#10;송년회 케이터링 견적, 금, 임매니저'}">${esc(text||'')}</textarea><span class="err" id="f-err" hidden>업무를 한 줄 이상 적어 주세요.</span>
   <div class="btns"><button class="btn pri" data-act="qaBulkGo" style="flex:1">등록</button></div>`);
 }
+function myItems(who,d){
+  const r=[];
+  S.leaves.filter(l=>l.member===who&&l.start<=d&&l.end>=d).forEach(l=>r.push({c:'lv',lab:'부재',t:l.type+(l.memo?' · '+l.memo:''),act:`data-act="leave" data-id="${l.id}"`}));
+  S.meetings.filter(m=>m.date===d&&((m.attendees||[]).includes(who)||m.host===who)).sort(mAsc).forEach(m=>r.push({c:'mt',lab:kindLabel(m),t:`${m.time||''} ${m.title}`.trim(),act:`data-act="openMeet" data-id="${m.id}"`}));
+  S.projects.filter(p=>p.end===d&&p.status!=='done'&&(p.owner===who||p.staff===who)).forEach(p=>r.push({c:'pj',lab:'프로젝트',t:`${p.name} 행사일`,act:`data-act="openProj" data-id="${p.id}"`}));
+  S.tasks.filter(t=>t.assignee===who&&t.due===d).sort((a,b)=>(a.status!=='todo')-(b.status!=='todo')).forEach(t=>r.push({c:t.status==='todo'?'du':'dn',t:t.title,task:t}));
+  return r;
+}
+function wkGrid(who,W){
+  const T=today();
+  return `<div class="wk">${[0,1,2,3,4,5,6].map(i=>{const d=addDays(W,i),dt=parse(d),it=myItems(who,d);
+    return `<div class="wkd ${d===T?'today':''} ${i>4?'we':''}"><div class="wkh"><b>${DOW[dt.getDay()]}</b><span>${dt.getMonth()+1}/${dt.getDate()}</span>${d===T?'<span class="chip done">오늘</span>':''}</div><div class="wkb">${it.map(x=>x.task?`<div class="wki ${x.task.status!=='todo'?'done':isLate(x.task)?'late':''}"><button class="tck s" data-act="done" data-id="${x.task.id}" aria-label="${x.task.status==='todo'?'완료로 표시':'완료 취소'}">${x.task.status!=='todo'?I.ok:''}</button><button class="wkt" data-act="task" data-id="${x.task.id}">${esc(x.t)}${x.task.projectId&&proj(x.task.projectId)?`<small>${esc(proj(x.task.projectId).name)}</small>`:''}</button></div>`:`<button class="ev ${x.c}" ${x.act}>${esc(x.lab)} · ${esc(x.t)}</button>`).join('')||'<span class="wk0">—</span>'}</div></div>`}).join('')}</div>`;
+}
+function vMyWeek(who,self,mine){
+  const T=today(),W=mondayOf(T),E=addDays(W,6),N=addDays(W,7),nx=nextWork(T);
+  const wk=mine.filter(t=>t.due>=W&&t.due<=E),wkD=wk.filter(t=>t.status==='done').length;
+  const old=mine.filter(t=>t.status==='todo'&&t.due&&t.due<W).sort(byDue),nod=mine.filter(t=>t.status==='todo'&&!t.due);
+  return `<div class="slim"><span>이번 주(${md(W)}–${md(E)}) 마감 <b>${wkD}/${wk.length}</b> 완료</span><div class="prog"><i style="width:${rate(wkD,wk.length)}%"></i></div><span>${rate(wkD,wk.length)}%</span></div>
+  ${old.length?`<section><div class="sec-h"><h2>지난주에서 밀린 업무</h2><span class="meta">${old.length}건</span></div><div class="card list">${old.map(t=>taskItem(t,{pp:self?nx:''})).join('')}</div></section>`:''}
+  <section><div class="sec-h"><h2>이번 주 한눈에</h2><span class="meta">네모를 누르면 완료돼요</span></div>${wkGrid(who,W)}</section>
+  ${isWeekEnd()?`<section><div class="sec-h"><h2>다음 주</h2><span class="meta">${md(N)}–${md(addDays(N,6))}</span></div>${wkGrid(who,N)}</section>`:'<p class="note" style="margin:0">다음 주 업무는 금요일부터 여기에 함께 보여요. 그 전에 보려면 "한 달"을 눌러 주세요.</p>'}
+  ${nod.length?`<section><div class="sec-h"><h2>기한 없는 업무</h2><span class="meta">${nod.length}건</span></div><div class="card list">${nod.map(t=>taskItem(t)).join('')}</div></section>`:''}`;
+}
+function vMyMonth(who){
+  const ym=ui.myMonth,[y,m]=ym.split('-').map(Number),T=today(),first=new Date(y,m-1,1),start=ymd(new Date(y,m-1,1-first.getDay()));
+  const n=Math.ceil((first.getDay()+new Date(y,m,0).getDate())/7)*7;
+  const cells=Array.from({length:n},(_,i)=>addDays(start,i)).map(d=>{const it=myItems(who,d),dt=parse(d),mx=3;
+    return `<div class="cell ${d.slice(0,7)!==ym?'out':''} ${dt.getDay()===0?'sun':''} ${dt.getDay()===6?'sat':''} ${d===T?'today':''} ${d===ui.mySel?'sel':''}" data-act="myPick" data-d="${d}" role="button" tabindex="0" aria-label="${longD(d)}, ${it.length}건"><span class="n">${dt.getDate()}</span>${it.slice(0,mx).map(x=>`<span class="ev ${x.c}">${esc(x.t)}</span>`).join('')}${it.length>mx?`<span class="more">+${it.length-mx}</span>`:''}</div>`}).join('');
+  const se=myItems(who,ui.mySel);
+  return `<div class="navrow"><span class="navc"><button class="arrow" data-act="myMon" data-n="-1" aria-label="이전 달">${I.l}</button><span class="lbl">${y}년 ${m}월</span><button class="arrow" data-act="myMon" data-n="1" aria-label="다음 달">${I.r}</button></span><button class="link" data-act="myToday">오늘로</button></div>
+  <div class="card mcal"><div class="dow">${DOW.map(d=>`<span>${d}</span>`).join('')}</div><div class="grid">${cells}</div></div>
+  <section><div class="sec-h"><h2>${longD(ui.mySel)}</h2><span class="meta">${se.length}건</span></div><div class="card list">${se.length?se.map(x=>x.task?taskItem(x.task):`<button class="lrow" ${x.act}><span class="ev ${x.c}" style="flex:none">${esc(x.lab)}</span><span class="t">${esc(x.t)}</span></button>`).join(''):'<div class="empty">이 날은 잡힌 업무가 없어요.</div>'}</div></section>`;
+}
 function vMe(){
-  const T=today(),who=ui.who&&mem(ui.who)?ui.who:me(),self=who===me(),mine=S.tasks.filter(t=>t.assignee===who);
-  const op=mine.filter(t=>t.status==='todo').sort(byDue),rv=mine.filter(t=>t.status==='review'),wS=mondayOf(T),wEnd=addDays(wS,6),nEnd=addDays(wEnd,7),nx=nextWork(T);
+  const T=today(),who=ui.who&&mem(ui.who)?ui.who:me(),self=who===me(),mine=S.tasks.filter(t=>t.assignee===who),v=ui.myView||'today';
+  const hd=`<div class="page-h"><div><div class="eyebrow">${longD(T)}</div><h1>${self?'내 업무':esc(mname(who))+'님 업무'}</h1></div>
+   <div class="btns"><span class="seg">${[['today','오늘'],['week','이번 주'],['month','한 달']].map(([k,l])=>`<button class="${v===k?'on':''}" data-act="myView" data-v="${k}">${l}</button>`).join('')}</span><label class="pickwrap">보기 <select class="pick" data-chg="who">${memberOpts(who)}</select></label></div></div>
+  ${qaBar('')}`;
+  if(v==='week')return hd+vMyWeek(who,self,mine);
+  if(v==='month')return hd+vMyMonth(who);
+  const op=mine.filter(t=>t.status==='todo').sort(byDue),rv=mine.filter(t=>t.status==='review'),wS=mondayOf(T),wEnd=addDays(wS,6),nx=nextWork(T);
   const late=op.filter(t=>t.due&&t.due<T),tod=op.filter(t=>t.due===T);
   const toCheck=S.tasks.filter(t=>t.reviewer===who&&t.status==='review');
   const mtT=S.meetings.filter(m=>m.date===T&&(m.attendees||[]).includes(who)).sort(mAsc);
   const doneT=mine.filter(t=>t.status==='done'&&t.doneAt===T).length;
-  const G=[['이번 주',t=>t.due>T&&t.due<=wEnd],['다음 주',t=>t.due>wEnd&&t.due<=nEnd],['그 이후',t=>t.due>nEnd],['기한 없음',t=>!t.due]];
-  const later=G.map(([l,f])=>{const ts=op.filter(f);return ts.length?`<div class="grp"><span>${l}</span><span>${ts.length}</span></div>${ts.map(t=>taskItem(t)).join('')}`:''}).join('');
   const wk=mine.filter(t=>t.due>=wS&&t.due<=wEnd),wkD=wk.filter(t=>t.status==='done').length,allD=mine.filter(t=>t.status==='done').length;
   const withDue=mine.filter(t=>t.status==='done'&&t.due&&t.doneAt),onTime=withDue.filter(t=>t.doneAt<=t.due).length;
   const doneR=mine.filter(t=>t.status==='done'&&(t.doneAt||'')>=addDays(T,-7)).sort((a,b)=>(b.doneAt||'').localeCompare(a.doneAt||''));
@@ -752,21 +849,17 @@ function vMe(){
   const nToday=late.length+tod.length+toCheck.length;
   const todayHtml=(late.length?`<div class="grp red"><span>밀린 업무</span><span>${late.length>1&&self?`<button class="exp" style="color:var(--fail)" data-act="postponeAll" data-to="${nx}">모두 ${nx===addDays(T,1)?'내일로':'월요일로'}</button>`:late.length}</span></div>${late.map(t=>taskItem(t,{pp:self?nx:''})).join('')}`:'')
     +(tod.length?`<div class="grp"><span>오늘 마감</span><span>${tod.length}</span></div>${tod.map(t=>taskItem(t)).join('')}`:'')
-    +(mtT.length?`<div class="grp"><span>오늘 회의</span><span>${mtT.length}</span></div>${mtT.map(meetRow).join('')}`:'')
+    +(mtT.length?`<div class="grp"><span>오늘 미팅·회의</span><span>${mtT.length}</span></div>${mtT.map(meetRow).join('')}`:'')
     +(toCheck.length?`<div class="grp"><span>내가 확인할 것</span><span>${toCheck.length}</span></div>${toCheck.map(t=>`<div class="trow2"><button class="tmain" data-act="task" data-id="${t.id}"><span class="tname">${esc(t.title)}</span><span class="tmeta">${av(t.assignee,1)}<span class="mi">${esc(mname(t.assignee))} 완료 · ${md(t.submitAt||T)}</span>${projTag(t.projectId)}</span></button>${self?`<button class="btn sm pri" data-act="approveTask" data-id="${t.id}">확인</button>`:''}</div>`).join('')}`:'');
-  return `<div class="page-h"><div><div class="eyebrow">${longD(T)}</div><h1>${self?'내 업무':esc(mname(who))+'님 업무'}</h1></div>
-   <div class="btns">${isWeekEnd()?'':`<button class="link" data-act="showNext">${ui.showNext?'다음 주 미리 보기 닫기':'다음 주 미리 보기'}</button>`}<label class="pickwrap">보기 <select class="pick" data-chg="who">${memberOpts(who)}</select></label></div></div>
-  ${qaBar('')}
+  return hd+`
   ${vRemind(who)}
   ${away.length?`<div class="infobar"><span>오늘 부재</span>${away.map(l=>`<b>${esc(mname(l.member))}</b> ${esc(l.type)}`).join(' · ')}<button class="link" style="margin-left:auto" data-act="goTeam">팀 현황 보기</button></div>`:''}
   <section><div class="sec-h"><h2>오늘 할 것</h2><span class="meta">${nToday?`${nToday}건 남음`:''}${doneT?`${nToday?' · ':''}오늘 완료 ${doneT}건`:''}</span></div>
    <div class="card list">${todayHtml||`<div class="empty">${doneT?'오늘 할 일을 모두 끝냈어요.':'오늘 마감인 업무가 없어요.'}</div>`}</div></section>
-  <div class="slim"><span>이번 주 마감 <b>${wkD}/${wk.length}</b> 완료</span><div class="prog"><i style="width:${rate(wkD,wk.length)}%"></i></div><span>전체 완료 ${rate(allD,mine.length)}% · 기한 내 ${rate(onTime,withDue.length)}%</span></div>
-  <div class="g2"><section><div class="sec-h"><h2>이후 일정</h2><button class="link" data-act="newTask" data-who="${esc(who)}">+ 자세히 등록</button></div>
-   <div class="card list">${later||'<div class="empty">이후에 잡힌 업무가 없어요.</div>'}</div></section>
+  <div class="slim"><span>이번 주 마감 <b>${wkD}/${wk.length}</b> 완료</span><div class="prog"><i style="width:${rate(wkD,wk.length)}%"></i></div><span>전체 완료 ${rate(allD,mine.length)}% · 기한 내 ${rate(onTime,withDue.length)}%</span><button class="link" data-act="myView" data-v="week">이번 주 한눈에 보기</button></div>
+  <div class="g2"><section><div class="sec-h"><h2>다가오는 미팅·회의</h2><button class="link" data-act="tab" data-tab="meet">전체 보기</button></div><div class="card list">${meets.length?meets.map(meetRow).join(''):'<div class="empty">잡힌 미팅·회의가 없어요.</div>'}</div></section>
    <div class="col2">
     ${rv.length?`<section><div class="sec-h"><h2>확인 기다리는 중</h2><span class="meta">${rv.length}건</span></div><div class="card list">${rv.map(t=>taskItem(t)).join('')}</div></section>`:''}
-    <section><div class="sec-h"><h2>다가오는 회의</h2><button class="link" data-act="tab" data-tab="meet">회의</button></div><div class="card list">${meets.length?meets.map(meetRow).join(''):'<div class="empty">잡힌 회의가 없어요.</div>'}</div></section>
     ${doneR.length?`<section><div class="sec-h"><h2>최근 완료</h2><span class="meta">최근 7일</span></div><div class="card list">${doneR.map(t=>taskItem(t)).join('')}</div></section>`:''}
    </div></div>`;
 }
@@ -796,25 +889,30 @@ function vProject(p){
   const ms=S.meetings.filter(m=>m.projectId===p.id).sort((a,b)=>mAsc(b,a));
   const pp=projPct(p),tm=pTime(p),inR=T>=p.start&&T<=p.end;
   return `<button class="back" data-act="projBack">${I.l} 프로젝트 목록</button>
-  <div class="page-h"><div><div class="eyebrow">${md(p.start)} 시작 · 행사일 ${md(p.end)} (${dowOf(p.end)}) · PM ${esc(mname(p.owner))}${p.staff&&p.staff!==p.owner?' · 담당 '+esc(mname(p.staff)):''}</div><h1 style="display:flex;align-items:center;gap:10px"><span class="pdot" style="width:12px;height:12px;background:${c}"></span>${esc(p.name)}</h1>${updLine('projects',p)}</div><div class="btns"><button class="btn" data-act="addPlan" data-id="${p.id}">표준 일정 넣기</button><button class="btn" data-act="editProj" data-id="${p.id}">편집</button><button class="btn pri" data-act="newTask" data-pid="${p.id}">+ 업무</button></div></div>
+  <div class="page-h"><div><div class="eyebrow">${md(p.start)} 시작 · 행사일 ${md(p.end)} (${dowOf(p.end)}) · PM ${esc(mname(p.owner))}${p.staff&&p.staff!==p.owner?' · 담당 '+esc(mname(p.staff)):''}</div><h1 style="display:flex;align-items:center;gap:10px"><span class="pdot" style="width:12px;height:12px;background:${c}"></span>${esc(p.name)}</h1>${updLine('projects',p)}</div><div class="btns"><button class="btn" data-act="editProj" data-id="${p.id}">편집</button><button class="btn pri" data-act="newTask" data-pid="${p.id}">+ 업무</button></div></div>
   ${qaBar(p.id)}
   <div class="card tl"><div class="pstat"><span>완료율</span><div class="prog"><i style="width:${pp}%;background:${c}"></i></div><b>${pp}%</b></div>
    <div class="pstat" style="margin-top:6px"><span>기간</span><div class="prog gold"><i style="width:${tm}%"></i></div><b>${tm}%</b></div>
    <div class="bar"><div class="fill" style="width:${tm}%;background:${c}"></div>${ts.filter(t=>t.due&&t.status!=='done').map(t=>`<span class="ms" style="left:${pos(t.due)}%;background:${isLate(t)?'var(--fail)':c}" title="${esc(t.title)} ${md(t.due)}"></span>`).join('')}${inR?`<span class="now" style="left:${pos(T)}%"><span>오늘 · ${dday(diffDays(T,p.end))}</span></span>`:''}</div>
    <div class="ends"><span>${md(p.start)} 시작</span><span>${md(p.end)} 마감</span></div>${p.memo?`<p class="note" style="margin:10px 0 0">${esc(p.memo)}</p>`:''}</div>
+  <div class="g2" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))"><section><div class="sec-h"><h2>① 현장답사·미팅</h2><button class="link" data-act="addMeet" data-kind="site" data-pid="${p.id}">+ 추가</button></div><div class="card list">${ms.filter(isSite).map(meetRow).join('')||'<div class="empty">아직 없어요. 현장답사나 미팅을 먼저 기록해요.</div>'}</div></section>
+  <section><div class="sec-h"><h2>② 회의</h2><button class="link" data-act="addMeet" data-kind="internal" data-pid="${p.id}">+ 추가</button></div><div class="card list">${ms.filter(m=>!isSite(m)).map(meetRow).join('')||'<div class="empty">아직 없어요. 현장 자료를 보며 회의하고 업무를 나눠요.</div>'}</div></section></div>
   <section><div class="sec-h"><h2>연락처</h2><button class="link" data-act="contactAdd" data-pid="${p.id}">+ 연락처</button></div><div class="card list">${contactsHtml(p)}</div></section>
   <section><div class="sec-h"><h2>담당자별 업무 배분</h2>${ui.pWho?`<button class="link" data-act="pWho" data-w="">전체 보기</button>`:'<span class="meta">이름을 누르면 그 사람 업무만 보여요</span>'}</div>
   <div class="card list">${who.length?`<div class="alloc h"><span>담당자</span><span class="n">업무</span><span class="n">완료</span><span class="n">지연</span><span>완료율</span></div>${alloc}`:'<div class="empty">아직 배정된 업무가 없어요.</div>'}</div></section>
   <section><div class="sec-h"><h2>업무 현황${ui.pWho?` · ${esc(mname(ui.pWho))}`:''}</h2></div><div class="board">${board}</div></section>
-  <section><div class="sec-h"><h2>업무 이관 기록</h2><span class="meta">${hos.length}건</span></div><div class="card list">${hos.length?hos.map(({t,h})=>`<button class="hrow" data-act="task" data-id="${t.id}"><span class="hd">${md(h.d)}</span><span><b style="font-weight:600">${esc(t.title)}</b><br><span class="note">${esc(mname(h.from))} → ${esc(mname(h.to))}${h.reason?` · ${esc(h.reason)}`:''} (${esc(mname(h.by))} 기록)</span></span></button>`).join(''):'<div class="empty">담당자가 바뀐 업무가 없어요. 업무에서 담당자를 바꾸면 여기에 남아요.</div>'}</div></section>
-  <section><div class="sec-h"><h2>관련 회의</h2><button class="link" data-act="addMeet" data-pid="${p.id}">+ 회의</button></div><div class="card list">${ms.length?ms.map(meetRow).join(''):'<div class="empty">이 프로젝트로 잡힌 회의가 없어요.</div>'}</div></section>`;
+  <section><div class="sec-h"><h2>업무 이관 기록</h2><span class="meta">${hos.length}건</span></div><div class="card list">${hos.length?hos.map(({t,h})=>`<button class="hrow" data-act="task" data-id="${t.id}"><span class="hd">${md(h.d)}</span><span><b style="font-weight:600">${esc(t.title)}</b><br><span class="note">${esc(mname(h.from))} → ${esc(mname(h.to))}${h.reason?` · ${esc(h.reason)}`:''} (${esc(mname(h.by))} 기록)</span></span></button>`).join(''):'<div class="empty">담당자가 바뀐 업무가 없어요. 업무에서 담당자를 바꾸면 여기에 남아요.</div>'}</div></section>`;
 }
 function vMeetings(){
   if(ui.meet){const m=S.meetings.find(x=>x.id===ui.meet);if(m)return vMeeting(m);ui.meet=null}
-  const T=today(),up=S.meetings.filter(m=>m.date>=T).sort(mAsc),past=S.meetings.filter(m=>m.date<T).sort((a,b)=>mAsc(b,a));
-  return `<div class="page-h"><div><div class="eyebrow">현장 미팅 보고 → 회의 기록 → 업무 배정</div><h1>회의</h1></div><button class="btn pri" data-act="addMeet">+ 새 회의</button></div>
-  <section><div class="sec-h"><h2>예정된 회의</h2></div><div class="card list">${up.map(meetRow).join('')||'<div class="empty">예정된 회의가 없어요.</div>'}</div></section>
-  <section><div class="sec-h"><h2>지난 회의</h2></div><div class="card list">${past.map(meetRow).join('')||'<div class="empty">지난 회의가 없어요.</div>'}</div></section>`;
+  const site=ui.mk!=='internal',nm=site?'현장답사·미팅':'회의',T=today(),ls=S.meetings.filter(m=>isSite(m)===site);
+  const up=ls.filter(m=>m.date>=T).sort(mAsc),past=ls.filter(m=>m.date<T).sort((a,b)=>mAsc(b,a));
+  return `<div class="page-h"><div><div class="eyebrow">프로젝트 → 현장답사·미팅 → 회의</div><h1>${nm}</h1></div><button class="btn pri" data-act="addMeet" data-kind="${site?'site':'internal'}">+ 새 ${nm}</button></div>
+  <span class="seg" style="align-self:flex-start"><button class="${site?'on':''}" data-act="mk" data-v="site">현장답사·미팅</button><button class="${site?'':'on'}" data-act="mk" data-v="internal">회의</button></span>
+  ${S.projects.some(p=>p.status!=='done')?'':`<div class="infobar"><span>프로젝트를 먼저 만들어야 ${nm}을(를) 추가할 수 있어요.</span><button class="link" style="margin-left:auto" data-act="addProj">+ 새 프로젝트</button></div>`}
+  <p class="note" style="margin:0">${site?'현장에서 확인한 내용과 사진을 항목별로 남겨요. 이 기록이 회의 자료 화면에 그대로 나와요.':'같은 프로젝트의 현장답사·미팅 자료를 보며 회의하고, 결정한 일을 담당자에게 나눠요.'}</p>
+  <section><div class="sec-h"><h2>예정</h2></div><div class="card list">${up.map(meetRow).join('')||`<div class="empty">예정된 ${nm}이(가) 없어요.</div>`}</div></section>
+  <section><div class="sec-h"><h2>지난 기록</h2></div><div class="card list">${past.map(meetRow).join('')||`<div class="empty">지난 ${nm}이(가) 없어요.</div>`}</div></section>`;
 }
 function actRow(a){
   if(a.taskId){const t=S.tasks.find(x=>x.id===a.taskId);
@@ -827,21 +925,23 @@ function meetSteps(m){
   const rep=m.report||[],acts=m.actions||[],site=m.site||[];
   const rf=rep.filter(r=>r.v&&r.v.trim()).length,as=acts.filter(a=>a.taskId).length,sf=site.filter(x=>x.ok).length;
   const st=[];
-  if(m.kind!=='internal')st.push(['site','현장 미팅 보고',`확인 ${sf}/${site.length}`,site.length&&sf===site.length]);
-  st.push(['rec','회의 기록',`${rf}/${rep.length} 항목 작성`,rf>0]);
-  st.push(['act','업무 배정',acts.length?`${as}/${acts.length}건 배정`:'아직 없음',acts.length&&as===acts.length]);
+  if(isSite(m))st.push(['site',kindLabel(m)+' 보고',`확인 ${sf}/${site.length}`,site.length&&sf===site.length]);
+  if(!isSite(m)||rf||acts.length){
+    st.push(['rec','회의 기록',`${rf}/${rep.length} 항목 작성`,rf>0]);
+    st.push(['act','업무 배정',acts.length?`${as}/${acts.length}건 배정`:'아직 없음',acts.length&&as===acts.length])}
   return st;
 }
 function vMeeting(m){
-  watchPhotos(m.id);
+  const rel=isSite(m)?[]:siteOf(m);
+  watchPhotos([m.id].concat(rel.map(x=>x.id)));
   const steps=meetSteps(m),site=m.site||[],rep=m.report||[],acts=m.actions||[];
   if(!steps.some(x=>x[0]===ui.mstep)){const st=mStage(m)[0];ui.mstep=st==='done'?'act':rep.some(r=>r.v&&r.v.trim())?'rec':steps[0][0]}
   const s=ui.mstep,i=steps.findIndex(x=>x[0]===s),nx=steps[i+1];
   const nextBtn=nx?`<button class="btn pri" data-act="mstep" data-s="${nx[0]}">다음: ${nx[1]} →</button>`:'';
   let body='';
   if(s==='site')body=`${siteTools(m)}<div class="card list">${site.map(c=>`<div class="sect"><div class="ckrow"><button class="ckit ${c.ok?'on':''}" data-act="sck" data-c="${c.id}" aria-pressed="${!!c.ok}"><span class="bx">${c.ok?I.ok:''}</span><b style="font-size:14px">${esc(c.k)}</b></button><button class="xbtn" data-act="sckDel" data-c="${c.id}" aria-label="항목 삭제">${I.x}</button></div><textarea class="inp live" data-live="site" data-c="${c.id}" placeholder="현장에서 확인한 내용, 클라이언트 요청 등" aria-label="${esc(c.k)}">${esc(c.v||'')}</textarea>${thumbsHtml(m,c)}</div>`).join('')}<div class="addrow pad" style="padding-top:8px"><input id="sck-new" class="inp" placeholder="이 미팅에만 항목 추가" aria-label="보고 항목 추가"><button class="btn sm" data-act="sckAdd">추가</button></div></div>
-    <p class="note" style="margin:0">현장에서 확인한 항목은 체크하고 내용을 적어 주세요. 적는 즉시 저장되고 모두에게 보여요. 고치기 전 내용은 수정 기록에 남아요.</p>
-    <div class="btns end"><button class="btn" data-act="copyMeet">보고서 복사</button>${nextBtn}</div>`;
+    <p class="note" style="margin:0">현장에서 확인한 항목은 체크하고 내용과 사진을 남겨 주세요. 적는 즉시 저장되고, 같은 프로젝트 회의의 자료 화면에 그대로 나와요.</p>
+    <div class="btns end"><button class="btn" data-act="copyMeet">보고서 복사</button>${nextBtn||`<button class="btn pri" data-act="addMeet" data-kind="internal" data-pid="${m.projectId||''}">다음: 이 프로젝트 회의 만들기 →</button>`}</div>`;
   if(s==='rec')body=`<div class="card list">${rep.map((r,j)=>`<div class="sect"><label for="rep-${j}">${esc(r.k)}</label><textarea id="rep-${j}" class="inp live" data-live="rep" data-i="${j}">${esc(r.v||'')}</textarea></div>`).join('')}</div>
     <p class="note" style="margin:0">적는 즉시 저장되고 모두에게 보여요. 같은 칸을 여러 명이 동시에 쓰면 마지막에 쓴 내용이 남으니 기록은 한 명이 맡아 주세요.</p>
     <div class="btns end"><button class="btn" data-act="copyMeet">보고서 복사</button>${nextBtn}</div>`;
@@ -850,14 +950,15 @@ function vMeeting(m){
     <div class="btns"><button class="btn" data-act="actAdd">+ 업무 추가</button>${un?`<button class="btn pri" data-act="actSend">${un}건 담당자에게 보내기</button>`:''}<button class="btn" data-act="copyMeet">보고서 복사</button></div>
     <p class="note" style="margin:0">보내면 담당자의 '내 업무'에 바로 들어가고, 여기서 완료 여부를 계속 볼 수 있어요.</p>`}
   const p=proj(m.projectId);
-  return `<button class="back" data-act="meetBack">${I.l} 회의 목록</button>
-  <div class="page-h"><div><div class="eyebrow">${m.kind==='internal'?'내부 회의':'현장 미팅'} · ${longD(m.date)} ${m.time||''}${p?' · '+esc(p.name):''} · 진행 ${esc(mname(m.host))}</div><h1>${esc(m.title)}</h1><div class="avs" style="margin:8px 0 4px">${(m.attendees||[]).map(w=>av(w,1)).join('')}</div>${updLine('meetings',m)}${m.approval?`<span class="chip done" style="margin-top:6px">수석 확인 · ${hm(m.approval.at)}</span>`:''}</div><div class="btns"><button class="btn pri" data-act="present">자료 화면</button><button class="btn" data-act="printMeet">인쇄</button><button class="btn" data-act="editMeet">편집</button></div></div>
-  <div class="steps" style="grid-template-columns:repeat(${steps.length},minmax(0,1fr))">${steps.map(([k,l,sub,ok],n)=>`<button class="step ${s===k?'on':''} ${ok?'ok':''}" data-act="mstep" data-s="${k}"><small>${n+1}단계${ok?' ✓':''}</small><b>${l}</b><span class="note">${sub}</span></button>`).join('')}</div>${body}`;
+  return `<button class="back" data-act="meetBack">${I.l} ${isSite(m)?'현장답사·미팅':'회의'} 목록</button>
+  <div class="page-h"><div><div class="eyebrow">${kindLabel(m)} · ${longD(m.date)} ${m.time||''}${p?' · '+esc(p.name):''} · 진행 ${esc(mname(m.host))}</div><h1>${esc(m.title)}</h1><div class="avs" style="margin:8px 0 4px">${(m.attendees||[]).map(w=>av(w,1)).join('')}</div>${updLine('meetings',m)}${m.approval?`<span class="chip done" style="margin-top:6px">수석 확인 · ${hm(m.approval.at)}</span>`:''}</div><div class="btns"><button class="btn pri" data-act="present">자료 화면</button><button class="btn" data-act="printMeet">인쇄</button><button class="btn" data-act="editMeet">편집</button></div></div>
+  ${isSite(m)?'':rel.length?`<div class="infobar" style="background:var(--blue-soft)"><span><b>현장 자료 ${rel.length}건</b></span>${rel.map(x=>`<button class="link" data-act="openMeet" data-id="${x.id}">${md(x.date)} ${esc(x.title)}</button>`).join('')}<span class="note" style="margin-left:auto">자료 화면에 함께 나와요</span></div>`:`<div class="infobar"><span>이 프로젝트에 기록된 현장답사·미팅이 아직 없어요.</span><button class="link" style="margin-left:auto" data-act="addMeet" data-kind="site" data-pid="${m.projectId||''}">+ 현장답사·미팅</button></div>`}
+  <div class="steps" ${steps.length<2?'hidden':''} style="grid-template-columns:repeat(${steps.length},minmax(0,1fr))">${steps.map(([k,l,sub,ok],n)=>`<button class="step ${s===k?'on':''} ${ok?'ok':''}" data-act="mstep" data-s="${k}"><small>${n+1}단계${ok?' ✓':''}</small><b>${l}</b><span class="note">${sub}</span></button>`).join('')}</div>${body}`;
 }
 function dayItems(d,all){
   const r=[],f=all?{lv:1,mt:1,du:1}:ui.cs;
   if(f.lv)S.leaves.filter(l=>l.start<=d&&l.end>=d).forEach(l=>r.push({c:'lv',lab:'부재',t:`${mname(l.member)} ${l.type}`,full:`${mname(l.member)} ${l.type}${l.memo?' · '+l.memo:''}`,act:`data-act="leave" data-id="${l.id}"`}));
-  if(f.mt)S.meetings.filter(m=>m.date===d).sort(mAsc).forEach(m=>r.push({c:'mt',lab:'회의',t:`${m.time||''} ${m.title}`.trim(),full:`${m.time||''} ${m.title}`.trim(),act:`data-act="openMeet" data-id="${m.id}"`}));
+  if(f.mt)S.meetings.filter(m=>m.date===d).sort(mAsc).forEach(m=>r.push({c:'mt',lab:kindLabel(m),t:`${m.time||''} ${m.title}`.trim(),full:`${m.time||''} ${m.title}`.trim(),act:`data-act="openMeet" data-id="${m.id}"`}));
   if(f.du){S.projects.filter(p=>p.end===d&&p.status!=='done').forEach(p=>r.push({c:'pj',lab:'프로젝트',t:`${p.name} 마감`,full:`${p.name} 마감`,act:`data-act="openProj" data-id="${p.id}"`}));
     S.tasks.filter(t=>t.due===d&&t.status!=='done').forEach(t=>r.push({c:'du',lab:'마감',t:`${mname(t.assignee)} ${t.title}`,full:`${mname(t.assignee)} · ${tLabel(t)}`,act:`data-act="task" data-id="${t.id}"`}))}
   return r;
@@ -895,7 +996,7 @@ function logAuto(m,d,compact){
     const pp=own.filter(h=>h.type==='postpone');if(pp.length)parts.push('마감 연기 '+pp[pp.length-1].text);const nt=own.filter(h=>h.type==='note');if(nt.length)parts.push('메모: '+nt[nt.length-1].text);
     if(!parts.length&&own.some(h=>h.type==='create'))parts.push('업무 등록');
     prog.push(L+(parts.length?' — '+parts.join(' / '):''))});
-  const meets=S.meetings.filter(x=>x.date===d&&(x.attendees||[]).includes(m)).sort(mAsc).map(x=>{const n=(x.actions||[]).length;return `${x.time?x.time+' ':''}${x.kind==='internal'?'':'[현장] '}${x.title}${n?` · 결정 업무 ${n}건`:''}`});
+  const meets=S.meetings.filter(x=>x.date===d&&(x.attendees||[]).includes(m)).sort(mAsc).map(x=>{const n=(x.actions||[]).length;return `${x.time?x.time+' ':''}${x.kind==='internal'?'':'['+kindLabel(x)+'] '}${x.title}${n?` · 결정 업무 ${n}건`:''}`});
   const st=S.leaves.filter(l=>l.member===m&&l.start<=d&&l.end>=d).map(l=>l.type+(l.memo?` (${l.memo})`:''));
   const out=[],add=(k,items)=>{if(items.length)out.push({k,items})};
   add('근무',st);add('완료한 업무',done);add('진행한 업무',prog);add('못한 업무',missedFor(m,d).map(t=>missText(t,d)));add('확인한 업무',rv);add('인계',ho);add('회의',meets);
@@ -1068,7 +1169,9 @@ function thumbsHtml(m,c){return `<div class="thumbs">${photosOf(m.id,c.id).map(p
 function shrink(file,max,q){return new Promise((ok,no)=>{const img=new Image(),url=URL.createObjectURL(file);img.onload=()=>{const s0=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight)),c=document.createElement('canvas');c.width=Math.round(img.naturalWidth*s0);c.height=Math.round(img.naturalHeight*s0);c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);let d=c.toDataURL('image/jpeg',q);if(d.length>800000)d=c.toDataURL('image/jpeg',.5);ok(d)};img.onerror=()=>{URL.revokeObjectURL(url);no()};img.src=url})}
 async function addPhotos(m,iid,files){let n=0;toast('사진을 올리는 중…');for(const f of [...files].slice(0,10)){try{const data=await shrink(f,1280,.72);S.photos.push({id:uid(),meetingId:m.id,itemId:iid,data,by:me(),at:nowISO()});n++}catch(e){}}save();render();toast(n?`사진 ${n}장을 올렸어요`:'사진을 읽지 못했어요')}
 /* ---------- presentation ---------- */
-function slidesOf(m){const s=[{t:'cover'}];if(m.kind!=='internal')(m.site||[]).forEach(x=>s.push({t:'site',x}));s.push({t:'rec'});if((m.actions||[]).length)s.push({t:'act'});return s}
+function slidesOf(m){const s=[{t:'cover'}],has=r=>(m.report||[]).some(x=>x.v&&x.v.trim());
+  (isSite(m)?[m]:siteOf(m)).forEach(sm=>(sm.site||[]).forEach(x=>{if(sm===m||x.ok||(x.v&&x.v.trim())||photosOf(sm.id,x.id).length)s.push({t:'site',x,m:sm})}));
+  if(!isSite(m)||has())s.push({t:'rec'});if((m.actions||[]).length)s.push({t:'act'});return s}
 function renderPresent(){
   const r=document.getElementById('presRoot');if(!r)return;
   if(!ui.pres){if(r.innerHTML){r.innerHTML='';document.body.style.overflow=''}return}
@@ -1076,8 +1179,8 @@ function renderPresent(){
   const sl=slidesOf(m);if(ui.pres.follow&&m.live&&m.live.by!==me())ui.pres.i=m.live.i;
   ui.pres.i=Math.max(0,Math.min(ui.pres.i,sl.length-1));const s=sl.at(ui.pres.i),p=proj(m.projectId),lead=m.live&&m.live.by;
   let b='';
-  if(s.t==='cover')b=`<div class="eyebrow">${m.kind==='internal'?'내부 회의':'현장 미팅'} · ${longD(m.date)} ${m.time||''}</div><h1>${esc(m.title)}</h1><p class="pv-text">${p?esc(p.name)+'\n':''}진행 ${esc(mname(m.host))}\n참석 ${(m.attendees||[]).map(x=>esc(mname(x))).join(', ')}</p>`;
-  if(s.t==='site'){const ph=photosOf(m.id,s.x.id);b=`<div class="eyebrow">현장 미팅 보고 · ${ui.pres.i}/${(m.site||[]).length}</div><h2>${s.x.ok?'✓ ':''}${esc(s.x.k)}</h2><p class="pv-text">${esc(s.x.v||'(내용 없음)')}</p>${ph.length?`<div class="pv-photos">${ph.map(x=>`<img src="${x.data}" alt="${esc(s.x.k)} 사진" data-act="pvZoom" data-id="${x.id}">`).join('')}</div>`:''}`}
+  if(s.t==='cover')b=`<div class="eyebrow">${kindLabel(m)} · ${longD(m.date)} ${m.time||''}</div><h1>${esc(m.title)}</h1><p class="pv-text">${p?esc(p.name)+'\n':''}진행 ${esc(mname(m.host))}\n참석 ${(m.attendees||[]).map(x=>esc(mname(x))).join(', ')}</p>`;
+  if(s.t==='site'){const ph=photosOf(s.m.id,s.x.id);b=`<div class="eyebrow">${md(s.m.date)} ${esc(s.m.title)} · ${kindLabel(s.m)} 보고</div><h2>${s.x.ok?'✓ ':''}${esc(s.x.k)}</h2><p class="pv-text">${esc(s.x.v||'(내용 없음)')}</p>${ph.length?`<div class="pv-photos">${ph.map(x=>`<img src="${x.data}" alt="${esc(s.x.k)} 사진" data-act="pvZoom" data-id="${x.id}">`).join('')}</div>`:''}`}
   if(s.t==='rec')b=`<div class="eyebrow">회의 기록</div><h2>회의 기록</h2>${(m.report||[]).map(x=>`<h3>${esc(x.k)}</h3><p class="pv-text">${esc((x.v||'').trim()||'-')}</p>`).join('')}`;
   if(s.t==='act')b=`<div class="eyebrow">결정 업무</div><h2>결정 업무</h2><table class="pv-tbl"><tr><th>할 일</th><th>담당</th><th>마감</th></tr>${m.actions.map(a=>`<tr><td>${esc(a.title)}</td><td>${esc(mname(a.assignee))}</td><td>${a.due?md(a.due):'-'}</td></tr>`).join('')}</table>`;
   const zoom=ui.pres.zoom&&S.photos.find(x=>x.id===ui.pres.zoom);
@@ -1087,15 +1190,15 @@ function renderPresent(){
 /* ---------- print ---------- */
 function printMeet(m){
   const p=proj(m.projectId),ap=m.approval,acts=m.actions||[];
-  document.getElementById('printRoot').innerHTML=`<div class="pr-head"><div><h1>${m.kind==='internal'?'회의 보고서':'현장 미팅 보고서'}</h1><div class="pr-sub">플러스기획 · 출력 ${hm(nowISO())}</div></div><table class="pr-sign"><tr><th>작성</th><th>수석</th></tr><tr><td>${esc(mname(m.host))}</td><td>${ap?`${esc(mname(ap.by))}<br><small>${hm(ap.at)} 확인</small>`:''}</td></tr></table></div>
+  document.getElementById('printRoot').innerHTML=`<div class="pr-head"><div><h1>${m.kind==='internal'?'회의 보고서':kindLabel(m)+' 보고서'}</h1><div class="pr-sub">플러스기획 · 출력 ${hm(nowISO())}</div></div><table class="pr-sign"><tr><th>작성</th><th>수석</th></tr><tr><td>${esc(mname(m.host))}</td><td>${ap?`${esc(mname(ap.by))}<br><small>${hm(ap.at)} 확인</small>`:''}</td></tr></table></div>
   <table class="pr-info"><tr><th>회의명</th><td colspan="3">${esc(m.title)}</td></tr><tr><th>일시</th><td>${longD(m.date)} ${m.time||''}</td><th>프로젝트</th><td>${p?esc(p.name):'-'}</td></tr><tr><th>참석자</th><td colspan="3">${(m.attendees||[]).map(x=>esc(mname(x))).join(', ')}</td></tr></table>
-  ${m.kind!=='internal'&&(m.site||[]).length?`<h2>현장 미팅 보고</h2>${m.site.map(x=>{const ph=photosOf(m.id,x.id);return `<div class="pr-item"><h3>${x.ok?'☑':'☐'} ${esc(x.k)}</h3><p>${esc((x.v||'').trim()||'-')}</p>${ph.length?`<div class="pr-ph">${ph.map(i=>`<img src="${i.data}" alt="">`).join('')}</div>`:''}</div>`}).join('')}`:''}
-  <h2>회의 기록</h2>${(m.report||[]).map(x=>`<div class="pr-item"><h3>${esc(x.k)}</h3><p>${esc((x.v||'').trim()||'-')}</p></div>`).join('')}
+  ${m.kind!=='internal'&&(m.site||[]).length?`<h2>${kindLabel(m)} 보고</h2>${m.site.map(x=>{const ph=photosOf(m.id,x.id);return `<div class="pr-item"><h3>${x.ok?'☑':'☐'} ${esc(x.k)}</h3><p>${esc((x.v||'').trim()||'-')}</p>${ph.length?`<div class="pr-ph">${ph.map(i=>`<img src="${i.data}" alt="">`).join('')}</div>`:''}</div>`}).join('')}`:''}
+  ${isSite(m)&&!(m.report||[]).some(r=>r.v&&r.v.trim())?'':'<h2>회의 기록</h2>'+(m.report||[]).map(x=>`<div class="pr-item"><h3>${esc(x.k)}</h3><p>${esc((x.v||'').trim()||'-')}</p></div>`).join('')}
   ${acts.length?`<h2>결정 업무</h2><table class="pr-act"><tr><th>할 일</th><th style="width:28mm">담당</th><th style="width:20mm">마감</th><th style="width:22mm">상태</th></tr>${acts.map(a=>{const t=a.taskId&&S.tasks.find(x=>x.id===a.taskId);return `<tr><td>${esc(a.title)}</td><td>${esc(mname(a.assignee))}</td><td>${a.due?md(a.due):'-'}</td><td>${t?(t.status==='done'?'완료':t.status==='review'?'확인 대기':'미완료'):'미배정'}</td></tr>`}).join('')}</table>`:''}`;
   setTimeout(()=>window.print(),60);
 }
 /* ---------- render ---------- */
-const TABS=[['me','내 업무',I.me],['team','팀',I.team],['proj','프로젝트',I.proj],['meet','회의',I.meet],['log','업무일지',I.log]];
+const TABS=[['me','내 업무',I.me],['team','팀',I.team],['proj','프로젝트',I.proj],['meet','미팅·회의',I.meet],['log','업무일지',I.log]];
 function render(){
   if(ui.tab==='cal')ui.tab='team';
   const gated=cloud.state!=='off'&&cloud.state!=='ready';
@@ -1152,7 +1255,7 @@ function taskSheet(t){
 }
 function projSheet(p){
   const isNew=!p;p=p||{id:'',name:'',start:today(),end:addDays(today(),45),color:0,owner:me(),staff:me(),status:'active',memo:''};ui.draft=Object.assign({},p);
-  const plan=parsePlan(tpl('eventPlan').items);
+  const plan=[];
   openSheet(`${head(isNew?'새 프로젝트':'프로젝트 편집')}${isNew?'':updLine('projects',S.projects.find(x=>x.id===p.id))}
   <label class="fld">행사·프로젝트 이름<input id="p-name" value="${esc(p.name)}" placeholder="예: A사 창립 30주년 기념식"></label><span class="err" id="f-err" hidden>이름을 적어 주세요.</span>
   <div class="row2"><label class="fld">시작<input type="date" id="p-start" value="${p.start}"></label><label class="fld">행사일 (마감)<input type="date" id="p-end" value="${p.end}"></label></div>
@@ -1164,15 +1267,20 @@ function projSheet(p){
   <div class="btns"><button class="btn pri" data-act="saveProj" style="flex:1">${isNew?'만들기':'저장'}</button>${isNew?'':'<button class="btn danger" data-act="delProj">삭제</button>'}</div>
   ${isNew?'':'<p class="note" style="margin:0">프로젝트를 지워도 연결된 업무와 회의는 남고, 수정 기록에서 되살릴 수 있어요.</p>'}`);
 }
-function meetSheet(m,pid){
-  const isNew=!m;m=m||{id:'',kind:'site',title:'',date:today(),time:'10:00',projectId:pid||'',host:me(),attendees:[me()]};
-  openSheet(`${head(isNew?'새 회의':'회의 편집')}
-  <div class="fld">종류<div class="radios"><label><input type="radio" name="m-kind" value="site" ${m.kind!=='internal'?'checked':''}><span>현장 미팅</span></label><label><input type="radio" name="m-kind" value="internal" ${m.kind==='internal'?'checked':''}><span>내부 회의</span></label></div></div>
-  <label class="fld">회의 이름<input id="m-title" value="${esc(m.title)}" placeholder="예: A사 기념식장 현장 미팅"></label><span class="err" id="f-err" hidden>회의 이름을 적어 주세요.</span>
+function meetSheet(m,pid,kind){
+  const isNew=!m;
+  if(isNew&&!S.projects.some(p=>p.status!=='done')){openSheet(`${head('프로젝트가 먼저 필요해요')}<p class="note" style="margin:0">현장답사·미팅과 회의는 프로젝트에 속해요.<br><b>프로젝트 → 현장답사·미팅 → 회의</b> 순서로 진행하니, 프로젝트부터 만들어 주세요.</p><div class="btns"><button class="btn pri" data-act="addProj" style="flex:1">+ 새 프로젝트 만들기</button></div>`,true);return}
+  m=m||{id:'',kind:kind||(ui.mk==='internal'?'internal':'site'),sub:'visit',title:'',date:today(),time:'10:00',projectId:pid||(ui.tab==='proj'&&ui.proj)||'',host:me(),attendees:[me()]};
+  const site=m.kind!=='internal',nm=site?'현장답사·미팅':'회의';ui.draft={mid:m.id,kind:site?'site':'internal'};
+  const po=`<option value="">${isNew||m.projectId?'프로젝트 선택':'없음'}</option>`+S.projects.filter(p=>p.status!=='done'||p.id===m.projectId).map(p=>`<option value="${p.id}" ${p.id===m.projectId?'selected':''}>${esc(p.name)}</option>`).join('');
+  openSheet(`${head(isNew?'새 '+nm:nm+' 편집')}
+  <label class="fld">프로젝트 (필수)<select id="m-proj">${po}</select></label><span class="err" id="f-err" hidden>프로젝트를 골라 주세요. 없으면 프로젝트부터 만들어야 해요.</span>
+  ${site?`<div class="fld">구분<div class="radios"><label><input type="radio" name="m-sub" value="visit" ${m.sub!=='meet'?'checked':''}><span>현장답사</span></label><label><input type="radio" name="m-sub" value="meet" ${m.sub==='meet'?'checked':''}><span>미팅</span></label></div></div>`:''}
+  <label class="fld">이름 (비우면 "프로젝트명 + ${site?'현장답사/미팅':'회의'}")<input id="m-title" value="${esc(m.title)}" placeholder="${site?'예: 행사장 2차 현장답사':'예: 현장답사 결과 회의'}"></label>
   <div class="row2"><label class="fld">날짜<input type="date" id="m-date" value="${m.date}"></label><label class="fld">시간<input type="time" id="m-time" value="${m.time||''}"></label></div>
-  <div class="row2"><label class="fld">프로젝트<select id="m-proj">${projOpts(m.projectId)}</select></label><label class="fld">진행<select id="m-host">${memberOpts(m.host)}</select></label></div>
+  <label class="fld">${site?'담당':'진행'}<select id="m-host">${memberOpts(m.host)}</select></label>
   <div class="fld">참석자 <button class="link" style="align-self:flex-start;font-size:13px" data-act="attAll">모두 선택</button><div class="radios">${S.members.map(x=>`<label><input type="checkbox" name="m-att" value="${esc(x.id)}" ${(m.attendees||[]).includes(x.id)?'checked':''}><span>${esc(x.name)}</span></label>`).join('')}</div></div>
-  ${isNew?'<p class="note" style="margin:0">현장 미팅은 현장 미팅 보고 → 회의 기록 → 업무 배정, 내부 회의는 회의 기록 → 업무 배정 순서예요. 항목은 지금 양식대로 들어가요.</p>':''}
+  ${isNew?`<p class="note" style="margin:0">${site?'만들면 보고 항목이 지금 양식대로 들어가요. 현장에서 체크하고 사진을 올리면 돼요.':'회의 기록 → 업무 배정 순서예요. 같은 프로젝트의 현장답사·미팅 자료가 자료 화면에 함께 나와요.'}</p>`:''}
   <div class="btns"><button class="btn pri" data-act="saveMeet" style="flex:1">${isNew?'만들기':'저장'}</button>${isNew?'':'<button class="btn danger" data-act="delMeet">삭제</button>'}</div>`);
 }
 function leaveSheet(l,d){
@@ -1196,7 +1304,8 @@ function fmtVal(k,f,v){
   if(f==='actions')return v.map(a=>`${a.title} — ${mname(a.assignee)}${a.due?' · '+md(a.due):''}`).join('\n')||'—';
   if(f==='items')return v.join('\n');
   if(f==='site')return v.map(x=>`[${x.k}]${x.ok?' ✓':''} ${x.v||'-'}`).join('\n')||'—';
-  if(f==='kind')return v==='internal'?'내부 회의':'현장 미팅';
+  if(f==='kind')return v==='internal'?'회의':'현장답사·미팅';
+  if(f==='sub')return v==='meet'?'미팅':v==='visit'?'현장답사':'—';
   if(f==='notes')return Object.entries(v).filter(([,x])=>x).map(([a,b])=>`[${a}] ${b}`).join('\n')||'—';
   if(f==='progress')return v+'%';
   if(f==='updatedAt'||f==='at')return hm(v);
@@ -1256,26 +1365,31 @@ function copyText(text,label){
 }
 function download(name,text,type){try{const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000);toast('파일을 내려받았어요.')}catch(e){toast('이 화면에서는 파일 저장이 막혀 있어요.')}}
 function meetText(m){
-  const p=proj(m.projectId);let o=`■ ${m.title} (${m.kind==='internal'?'내부 회의':'현장 미팅'})\n일시: ${longD(m.date)} ${m.time||''}\n${p?`프로젝트: ${p.name}\n`:''}진행: ${mname(m.host)}\n참석: ${(m.attendees||[]).map(mname).join(', ')}\n`;
-  if(m.kind!=='internal'&&(m.site||[]).length){o+=`\n◆ 현장 미팅 보고\n`;m.site.forEach(x=>o+=`\n[${x.k}]${x.ok?' ✓':''}\n${(x.v||'').trim()||'-'}\n`);o+=`\n◆ 회의 기록\n`}
-  (m.report||[]).forEach(r=>o+=`\n[${r.k}]\n${(r.v||'').trim()||'-'}\n`);
+  const p=proj(m.projectId),hasRep=(m.report||[]).some(r=>r.v&&r.v.trim());
+  let o=`■ ${m.title} (${kindLabel(m)})\n일시: ${longD(m.date)} ${m.time||''}\n${p?`프로젝트: ${p.name}\n`:''}${isSite(m)?'담당':'진행'}: ${mname(m.host)}\n참석: ${(m.attendees||[]).map(mname).join(', ')}\n`;
+  if(isSite(m)&&(m.site||[]).length){o+=`\n◆ ${kindLabel(m)} 보고\n`;m.site.forEach(x=>o+=`\n[${x.k}]${x.ok?' ✓':''}\n${(x.v||'').trim()||'-'}\n`)}
+  if(!isSite(m)||hasRep){if(isSite(m))o+=`\n◆ 회의 기록\n`;(m.report||[]).forEach(r=>o+=`\n[${r.k}]\n${(r.v||'').trim()||'-'}\n`)}
   const a=m.actions||[];if(a.length)o+=`\n[결정 업무]\n`+a.map(x=>`· ${x.title} — ${mname(x.assignee)}, ${x.due?md(x.due)+'까지':'기한 미정'}`).join('\n')+'\n';
   return o;
 }
 const curMeet=()=>S.meetings.find(x=>x.id===ui.meet);
-function openMeetById(id){const m=S.meetings.find(x=>x.id===id);if(!m)return;closeSheet();ui.tab='meet';ui.meet=id;ui.mstep=null;render();scrollTo(0,0)}
+function openMeetById(id){const m=S.meetings.find(x=>x.id===id);if(!m)return;closeSheet();ui.tab='meet';ui.meet=id;ui.mk=isSite(m)?'site':'internal';ui.mstep=null;render();scrollTo(0,0)}
 
 /* ---------- actions ---------- */
 const A={
   tab:b=>{ui.tab=b.dataset.tab;ui.proj=null;ui.meet=null;closeSheet();render();scrollTo(0,0)},
   fab:()=>{if(ui.tab==='proj'){if(ui.proj)taskSheet(newTaskDraft({pid:ui.proj}));else projSheet();return}
-    if(ui.tab==='meet'){meetSheet(null,'');return}
+    if(ui.tab==='meet'){const cm=ui.meet&&curMeet();meetSheet(null,cm?cm.projectId:'',cm?cm.kind:'');return}
     if(ui.tab==='team'&&ui.teamView==='cal'){leaveSheet(null,ui.sel);return}
     if(ui.tab==='guide'){if(isAdmin())guideEditSheet(null);return}
     taskSheet(newTaskDraft({who:ui.tab==='me'?(ui.who||me()):me()}))},
   newTask:b=>taskSheet(newTaskDraft({who:b.dataset.who,pid:b.dataset.pid})),
   task:b=>{const t=S.tasks.find(x=>x.id===b.dataset.id);if(t)taskSheet(t);else toast('삭제된 업무예요.')},
   showNext:()=>{ui.showNext=!ui.showNext;render()},
+  myView:b=>{ui.myView=b.dataset.v;render();scrollTo(0,0)},
+  myMon:b=>{const[y,m]=ui.myMonth.split('-').map(Number),d=new Date(y,m-1+(+b.dataset.n),1);ui.myMonth=ymd(d).slice(0,7);ui.mySel=ymd(d);render()},
+  myPick:b=>{ui.mySel=b.dataset.d;if(ui.mySel.slice(0,7)!==ui.myMonth)ui.myMonth=ui.mySel.slice(0,7);render()},
+  myToday:()=>{ui.mySel=today();ui.myMonth=ui.mySel.slice(0,7);render()},
   ack:b=>{const d=logDocEnsure(me(),addDays(mondayOf(today()),4)),s=new Set(d.nextAck||[]);s.has(b.dataset.k)?s.delete(b.dataset.k):s.add(b.dataset.k);d.nextAck=[...s];save();render()},
   ackAll:()=>{const d=logDocEnsure(me(),addDays(mondayOf(today()),4));d.nextAck=nextWeekItems(me()).items.map(i=>i.k);save();render();toast('다음 주 일정을 모두 확인했어요')},
   done:b=>{const t=S.tasks.find(x=>x.id===b.dataset.id);if(!t)return;const was=t.status;
@@ -1331,17 +1445,19 @@ const A={
     const id=ui.draft.id;S.projects=S.projects.filter(p=>p.id!==id);ui.proj=null;save();closeSheet();render();toast('삭제했어요')},
   openMeet:b=>openMeetById(b.dataset.id),
   meetBack:()=>{ui.meet=null;render()},
-  addMeet:b=>meetSheet(null,b.dataset.pid||''),
+  addMeet:b=>meetSheet(null,b.dataset.pid||'',b.dataset.kind||''),
+  mk:b=>{ui.mk=b.dataset.v;render()},
   editMeet:()=>meetSheet(curMeet()),
   attAll:()=>document.querySelectorAll('input[name=m-att]').forEach(x=>x.checked=true),
-  saveMeet:()=>{const g=id=>document.getElementById(id),title=g('m-title').value.trim();if(!title){g('f-err').hidden=false;return}
-    const kind=(document.querySelector('input[name=m-kind]:checked')||{}).value||'site';
-    const rec={kind,title,date:g('m-date').value||today(),time:g('m-time').value,projectId:g('m-proj').value,host:g('m-host').value,attendees:[...document.querySelectorAll('input[name=m-att]:checked')].map(x=>x.value)};
+  saveMeet:()=>{const g=id=>document.getElementById(id),d=ui.draft||{},m=d.mid?S.meetings.find(x=>x.id===d.mid):null,kind=d.kind==='internal'?'internal':'site';
+    const pid=g('m-proj').value;if(!pid&&!(m&&!m.projectId)){g('f-err').hidden=false;g('m-proj').focus();return}
+    const sub=kind==='internal'?'':((document.querySelector('input[name=m-sub]:checked')||{}).value||'visit'),p=proj(pid);
+    const title=g('m-title').value.trim()||`${p?p.name+' ':''}${kind==='internal'?'회의':sub==='meet'?'미팅':'현장답사'}`;
+    const rec={kind,sub,title,date:g('m-date').value||today(),time:g('m-time').value,projectId:pid,host:g('m-host').value,attendees:[...document.querySelectorAll('input[name=m-att]:checked')].map(x=>x.value)};
     const siteNew=()=>tpl('meetingPrep').items.map(k=>({id:uid(),k,v:'',ok:false}));
-    const m=document.querySelector('[data-act=delMeet]')?curMeet():null;
     if(m){Object.assign(m,rec);if(kind==='site'&&!(m.site||[]).length)m.site=siteNew();save();closeSheet();render();toast('저장했어요');return}
     const id=uid();S.meetings.push(Object.assign({id},rec,{site:kind==='site'?siteNew():[],report:tpl('meetingReport').items.map(k=>({k,v:''})),actions:[]}));
-    save();openMeetById(id);toast('회의를 만들었어요')},
+    save();openMeetById(id);toast(`${kind==='internal'?'회의':sub==='meet'?'미팅':'현장답사'}을(를) 만들었어요`)},
   delMeet:b=>{if(ui.armed!=='meet'){ui.armed='meet';b.classList.add('arm');b.textContent='한 번 더 누르면 삭제';return}
     S.meetings=S.meetings.filter(x=>x.id!==ui.meet);S.photos=S.photos.filter(x=>x.meetingId!==ui.meet);ui.meet=null;save();closeSheet();render();toast('삭제했어요')},
   mstep:b=>{ui.mstep=b.dataset.s;render();scrollTo(0,0)},
@@ -1445,12 +1561,15 @@ const A={
   printMeet:()=>{const m=curMeet();if(m)printMeet(m)},
   approveMeet:()=>{const m=curMeet();if(!m||!isApprover())return;if(m.approval)delete m.approval;else m.approval={by:me(),at:nowISO()};save();render();toast(m.approval?'수석 확인을 남겼어요':'수석 확인을 취소했어요')},
   qaAdd:()=>{const el=document.getElementById('qa');if(!el)return;const v=el.value.trim();if(!v){el.focus();return}
-    const r=parseQuick(v,el.dataset.pid,qaWho());S.tasks.push(mkTask(r));save();render();
-    toast(`${mname(r.assignee)} · ${md(r.due)}(${dowOf(r.due)}) 마감으로 등록했어요`);const n=document.getElementById('qa');if(n&&!('ontouchstart' in window))n.focus()},
+    const r=parseQuick(v,el.dataset.pid,qaWho());if(!r.title){toast('할 일을 적어 주세요');return}
+    S.tasks.push(mkTask(r));el.value='';save();render();const p=proj(r.projectId);
+    toast(`${p?'['+p.name+'] ':''}${r.title} · ${md(r.due)}(${dowOf(r.due)}) · ${mname(r.assignee)}`+(r.warn.length?' — '+r.warn.join(', '):''));
+    const n=document.getElementById('qa');if(n&&!('ontouchstart' in window))n.focus()},
   qaBulk:()=>{const el=document.getElementById('qa');bulkSheet(el?el.dataset.pid:'',el?el.value:'')},
   qaBulkGo:()=>{const lines=document.getElementById('qa-bulk').value.split('\n').map(x=>x.replace(/^\s*(?:[-•*·▪]|\d+[.)])\s+/,'').trim()).filter(Boolean);
     if(!lines.length){document.getElementById('f-err').hidden=false;return}
-    lines.forEach(l=>S.tasks.push(mkTask(parseQuick(l,ui.draft.pid,ui.draft.who))));save();closeSheet();render();toast(`업무 ${lines.length}개를 등록했어요`)},
+    let w=0,n=0;lines.forEach(l=>{const r=parseQuick(l,ui.draft.pid,ui.draft.who);if(!r.title)return;if(r.warn.length)w++;S.tasks.push(mkTask(r));n++});
+    save();closeSheet();render();toast(`업무 ${n}개를 등록했어요`+(w?` · ${w}개는 프로젝트나 담당자를 못 찾았어요`:''))},
   postponeAll:b=>{const T=today(),to=b.dataset.to,who=me();let n=0;
     S.tasks.filter(t=>t.assignee===who&&t.status==='todo'&&t.due&&t.due<T).forEach(t=>{const from=t.due,r=t.missed&&t.missed.d===T?t.missed.reason||'':'';t.missed={d:T,reason:r,to};t.due=to;pushH(t,'postpone',`${md(from)} → ${md(to)}`,{reason:r});n++});
     save();render();toast(`밀린 업무 ${n}건을 ${md(to)}로 옮겼어요`)},
